@@ -9,7 +9,7 @@ export default function Home() {
       <p className='text-lg my-1'>
         Get started with the{' '}
         <a 
-          href='/starwars'
+          href='/Starwars'
           className='border-b-0 border-rose-400 text-rose-400 hover:border-rose-600 hover:text-rose-600'
         >
           Star Wars Movie Ranker
