@@ -68,7 +68,7 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
         }
 
         useEffect(() => {
-            if ((needsComparison.size() === 0 && finalList.size() === list.length) || madeComparisons.length === 15) {
+            if ((needsComparison.size() === 0 && finalList.size() === list.length) || madeComparisons.length === 66) {
                 setDisplayFinalList(true)
             }
         }, [finalList, list.length, madeComparisons, needsComparison])
