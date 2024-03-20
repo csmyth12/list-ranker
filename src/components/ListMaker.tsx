@@ -1,27 +1,30 @@
 import { RankerOption } from '@/types/RankerOption'
 import { DoublyLinkedList } from '@/utils/DoublyLinkedList'
-import { FunctionComponent, useState } from 'react'
+import { FunctionComponent, useEffect, useState } from 'react'
 import { Comparison } from './Comparison'
 import { isAlreadyCompared } from '@/utils/getNewComparison'
 import { FinalList } from './FinalList'
 import { ProgressBar } from './ProgressBar'
+import { shuffle } from '@/utils/shuffle'
 
 export interface ListMakerProps {
     list: RankerOption[],
-    listName: string
+    listName: string,
+    disclaimer?: string
 }
 
-export const ListMaker: FunctionComponent<ListMakerProps> = ({ list, listName }) => {
+export const ListMaker: FunctionComponent<ListMakerProps> = ({ list, listName, disclaimer = null }) => {
         const [activeIndex, setActiveIndex] = useState(1)
-        const [activeComparison, setActiveComparison] = useState([list[0], list[1]])
         const [madeComparisons, setMadeComparisons] = useState<RankerOption[][]>([])
 
         const [finalList, setFinalList] = useState(new DoublyLinkedList())
         const [needsComparison, setNeedsComparison] = useState(new DoublyLinkedList())
         const [displayFinalList, setDisplayFinalList] = useState(false)
 
+        const [shuffledList, setShuffledList] = useState(list)
+        const [activeComparison, setActiveComparison] = useState<RankerOption[]>([])
+
         const handleSelection = (preferred: RankerOption, other: RankerOption) => {
-            debugger
             let addToMainComparisons: RankerOption[][] = [[preferred, other]]
             let newComparison = []
             if  (activeIndex < list.length) {
@@ -53,10 +56,10 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({ list, listName })
                 }
             }
             if ((activeIndex + 2) < list.length) {
-                newComparison = [list[activeIndex+1], list[activeIndex+2]]
+                newComparison = [shuffledList[activeIndex+1], shuffledList[activeIndex+2]]
             } else if ((activeIndex + 1) < list.length) {
-                newComparison = [finalList.last().value, list[activeIndex+1]]
-                finalList.push(list[activeIndex+1])
+                newComparison = [finalList.last().value, shuffledList[activeIndex+1]]
+                finalList.push(shuffledList[activeIndex+1])
             } else {
                 if (needsComparison.size() > 0) {
                     newComparison = (needsComparison.toArray().find((comparison) => {
@@ -82,10 +85,15 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({ list, listName })
             }
         }
 
+        useEffect(() => {
+            setShuffledList(shuffle(list))
+            setActiveComparison([shuffledList[0], shuffledList[1]])
+        }, [list, shuffledList])
+
         return (
             <div className='flex flex-col justify-center items-center h-screen'>
                 {displayFinalList ? (
-                    <FinalList list={finalList.toArray()} listName={listName} />
+                    <FinalList list={finalList.toArray()} listName={listName} disclaimer={disclaimer} />
                 ) : (
                     <>
                         <h1 className='text-2xl mt-4'>Which do you prefer?</h1>
@@ -95,7 +103,6 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({ list, listName })
                         />
                         <ProgressBar listLength={list.length} madeComparisonsLength={madeComparisons.length} />
                     </>
-                    
                 )}
             </div>
         )

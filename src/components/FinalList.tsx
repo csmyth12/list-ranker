@@ -5,10 +5,11 @@ import { useRouter } from 'next/router'
 
 export interface FinalListProps {
     list: RankerOption[],
-    listName: string
+    listName: string,
+    disclaimer?: string | null
 }
 
-export const FinalList: FunctionComponent<FinalListProps> = ({ list, listName }) => {
+export const FinalList: FunctionComponent<FinalListProps> = ({ list, listName, disclaimer = null }) => {
     const router = useRouter()
     let copyString = `Here's my ${listName} ranking:${'\n\n'}`
 
@@ -31,6 +32,12 @@ export const FinalList: FunctionComponent<FinalListProps> = ({ list, listName })
             <div className='flex flex-row items-end justify-end w-full'>
                 <button className='rounded border-2 bg-rose-300 text-white py-4 px-8 hover:bg-rose-500' onClick={() => copy(copyString)}>Copy</button>
             </div>
+            
+            {!!disclaimer && (
+                <p className='text-sm text-gray-300 mt-12'>
+                    {disclaimer}
+                </p>
+            )}
         </div>
     )
 }

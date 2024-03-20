@@ -26,6 +26,14 @@ export default function Home() {
             Harry Potter Film Ranker
           </a>
         </li>
+        <li>
+          <a 
+            href='/list-ranker/DublinPubs'
+            className='border-b-0 border-rose-400 text-rose-400 hover:border-rose-600 hover:text-rose-600'
+          >
+            Dublin Pubs Ranker
+          </a>
+        </li>
       </ul>
     </div>    
   )
