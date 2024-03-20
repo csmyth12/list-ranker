@@ -1,6 +1,7 @@
 import { RankerOption } from '@/types/RankerOption'
 import { FunctionComponent } from 'react'
 import copy from 'copy-to-clipboard'
+import { useRouter } from 'next/router'
 
 export interface FinalListProps {
     list: RankerOption[],
@@ -8,14 +9,13 @@ export interface FinalListProps {
 }
 
 export const FinalList: FunctionComponent<FinalListProps> = ({ list, listName }) => {
-    const copyString = `Here's my ${listName} ranking:
+    const router = useRouter()
+    let copyString = `Here's my ${listName} ranking:${'\n\n'}`
 
-        ${list.map((item, index) => `${index+1}: ${item.name}
-        
-        `)}
-
-        https://csmyth12.github.io/list-ranker/Starwars
-    `
+    list.forEach((item, index) => {
+        copyString += `${index + 1}: ${item.name}${'\n'}`
+    })
+    copyString += `${'\n'}csmyth12.github.io${router.pathname}`
 
     return (
         <div>
