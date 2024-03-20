@@ -7,15 +7,26 @@ export default function Home() {
       <p className='text-lg my-1'>A new way to generate top 10 lists by comparing any two entries and voting for your favourite of the two, resulting in a top 10 list based on which preferencial choices you make along the way.</p>
 
       <p className='text-lg my-1'>
-        Get started with the{' '}
-        <a 
-          href='/list-ranker/Starwars'
-          className='border-b-0 border-rose-400 text-rose-400 hover:border-rose-600 hover:text-rose-600'
-        >
-          Star Wars Movie Ranker
-        </a>
-        .
-      </p>
+        Check out all these existing lists to rank:
+        </p>
+      <ul>
+        <li>
+          <a 
+            href='/list-ranker/Starwars'
+            className='border-b-0 border-rose-400 text-rose-400 hover:border-rose-600 hover:text-rose-600'
+          >
+            Star Wars Film Ranker
+          </a>
+        </li>
+        <li>
+          <a 
+            href='/list-ranker/HarryPotter'
+            className='border-b-0 border-rose-400 text-rose-400 hover:border-rose-600 hover:text-rose-600'
+          >
+            Harry Potter Film Ranker
+          </a>
+        </li>
+      </ul>
     </div>    
   )
 }

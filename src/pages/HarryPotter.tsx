@@ -5,23 +5,23 @@ import '@fontsource-variable/nunito';
 import '../app/globals.css';
 
 export const metadata: Metadata = {
-  title: 'Star Wars Ranker',
-  description: 'Rank your favourite Star Wars Film',
+  title: 'Harry Potter Ranker',
+  description: 'Rank your favourite Harry Potter Film',
 };
 
-import { StarWarsFilms } from '@/lists/StarwarsFilms'
 import { ListMaker } from '@/components/ListMaker';
+import { HarryPotterFilms } from '@/lists/HarryPotterFilms';
 
-const Starwars = () => {
+const HarryPotter = () => {
     
     return (
         <>
             <ListMaker 
-                list={StarWarsFilms}
-                listName='Star Wars films'
+                list={HarryPotterFilms}
+                listName='Harry Potter films'
             />
         </>
     )
 }
 
-export default Starwars 
+export default HarryPotter

@@ -3,24 +3,25 @@ import { FunctionComponent } from 'react'
 import copy from 'copy-to-clipboard'
 
 export interface FinalListProps {
-    list: RankerOption[]
+    list: RankerOption[],
+    listName: string
 }
 
-export const FinalList: FunctionComponent<FinalListProps> = ({ list }) => {
-    const copyString = `Here's my Star Wars movies ranking:
+export const FinalList: FunctionComponent<FinalListProps> = ({ list, listName }) => {
+    const copyString = `Here's my ${listName} ranking:
 
         ${list.map((item, index) => `${index+1}: ${item.name}
         
         `)}
-        
+
         https://csmyth12.github.io/list-ranker/Starwars
     `
 
     return (
         <div>
-            <h2 className='text-4xl'>{'Here\'s your Star Wars Ranking!'}</h2>
+            <h2 className='text-4xl'>{`Here's your ${listName} Ranking!`}</h2>
 
-            <ol className='text-xl odd:text-gray-400 p-4'>
+            <ol className='text-xl odd:text-gray-400 even:text-black p-4'>
                 {list.map((item, index) => (
                     <li key={item.id}>
                         {index + 1}: <span className='italic'>{item.name}</span>

@@ -12,7 +12,6 @@ export const ProgressBar: FunctionComponent<ProgressBarProps> = ({ listLength, m
 
     useEffect(() => {
         setCompletedWidth((madeComparisonsLength / totalComparisons) * 100)
-        console.log(completedWidth)
     }, [completedWidth, madeComparisonsLength, totalComparisons])
 
     return (<div className='w-[80%] rounded-2xl flex flex-row'>

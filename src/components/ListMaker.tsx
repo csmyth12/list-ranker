@@ -7,10 +7,11 @@ import { FinalList } from './FinalList'
 import { ProgressBar } from './ProgressBar'
 
 export interface ListMakerProps {
-    list: RankerOption[]
+    list: RankerOption[],
+    listName: string
 }
 
-export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
+export const ListMaker: FunctionComponent<ListMakerProps> = ({ list, listName }) => {
         const [activeIndex, setActiveIndex] = useState(1)
         const [activeComparison, setActiveComparison] = useState([list[0], list[1]])
         const [madeComparisons, setMadeComparisons] = useState<RankerOption[][]>([])
@@ -18,9 +19,9 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
         const [finalList, setFinalList] = useState(new DoublyLinkedList())
         const [needsComparison, setNeedsComparison] = useState(new DoublyLinkedList())
         const [displayFinalList, setDisplayFinalList] = useState(false)
-        const [choices, setChoices] = useState(0)
 
         const handleSelection = (preferred: RankerOption, other: RankerOption) => {
+            debugger
             let addToMainComparisons: RankerOption[][] = [[preferred, other]]
             let newComparison = []
             if  (activeIndex < list.length) {
@@ -52,7 +53,10 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
                 }
             }
             if ((activeIndex + 2) < list.length) {
-                newComparison = ([list[activeIndex+1], list[activeIndex+2]])
+                newComparison = [list[activeIndex+1], list[activeIndex+2]]
+            } else if ((activeIndex + 1) < list.length) {
+                newComparison = [finalList.last().value, list[activeIndex+1]]
+                finalList.push(list[activeIndex+1])
             } else {
                 if (needsComparison.size() > 0) {
                     newComparison = (needsComparison.toArray().find((comparison) => {
@@ -72,7 +76,6 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
             setFinalList(finalList)
             setActiveIndex(activeIndex + 2)
             setMadeComparisons([...madeComparisons, ...addToMainComparisons])
-            setChoices(choices + 1)
             setActiveComparison(newComparison)
             if (!newComparison || newComparison.length < 2) {
                 setDisplayFinalList(true)
@@ -82,7 +85,7 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
         return (
             <div className='flex flex-col justify-center items-center h-screen'>
                 {displayFinalList ? (
-                    <FinalList list={finalList.toArray()} />
+                    <FinalList list={finalList.toArray()} listName={listName} />
                 ) : (
                     <>
                         <h1 className='text-2xl mt-4'>Which do you prefer?</h1>
