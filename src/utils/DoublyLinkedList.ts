@@ -96,6 +96,20 @@ export class DoublyLinkedList {
         return node.value
     }
 
+    public isNext(firstValue: any, shouldBeNext: any) {
+        if (!this.head) {
+            throw new Error('No elements in list error')
+        }
+
+        let node = this.head
+        
+        while (!!node && node.next && node.value !== firstValue) {
+            node = node.next
+        }
+
+        return node.next!.value === shouldBeNext
+    }
+
     public insertNext (node: ListNode, toInsert: any) {
         const newNode = new ListNode(toInsert)
         const oldNext = node.next

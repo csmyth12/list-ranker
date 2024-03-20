@@ -20,9 +20,9 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
         const [choices, setChoices] = useState(0)
 
         const handleSelection = (preferred: RankerOption, other: RankerOption) => {
+            console.log(`${preferred.name} preferred to ${other.name}`)
             let addToMainComparisons: RankerOption[][] = [[preferred, other]]
             let newComparison = []
-            debugger
             if  (activeIndex < list.length) {
                 if (finalList.size() > 0) {
                     needsComparison.push([finalList.last().value, preferred])
@@ -44,11 +44,10 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
                 } else {
                     let otherNode = finalList.get(other)
                     let preferredNode = finalList.get(preferred)
-                    addToMainComparisons = []
-                    if (!!preferredNode?.previous) {
+                    if (!!preferredNode?.previous && isAlreadyCompared([preferredNode?.previous!.value, preferred], madeComparisons)) {
                         addToMainComparisons.push([preferredNode?.previous!.value, other])
                     }
-                    if (!!otherNode?.next)
+                    if (!!otherNode?.next && isAlreadyCompared([other, otherNode?.next?.value], madeComparisons))
                         addToMainComparisons.push([preferred, otherNode?.next?.value])
                 }
             }
@@ -57,7 +56,7 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
             } else {
                 if (needsComparison.size() > 0) {
                     newComparison = (needsComparison.toArray().find((comparison) => {
-                        if (!isAlreadyCompared(comparison, madeComparisons)) {
+                        if (!isAlreadyCompared(comparison, madeComparisons) && finalList.isNext(comparison[0], comparison[1])) {
                             needsComparison.pop(needsComparison.get(comparison)!)
                             return comparison
                         } else {
@@ -69,16 +68,27 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
                     setDisplayFinalList(true)
                 }
             }
-            if (activeComparison.length < 2) {
-                setDisplayFinalList(true)
-            }
             setNeedsComparison(needsComparison)
             setFinalList(finalList)
             setActiveIndex(activeIndex + 2)
+            console.log('add to main comparisons: ', addToMainComparisons.map((item) => `${item[0].name} vs ${item[1].name}`))
             setMadeComparisons([...madeComparisons, ...addToMainComparisons])
             setChoices(choices + 1)
             setActiveComparison(newComparison)
+            if (!newComparison || newComparison.length < 2) {
+                setDisplayFinalList(true)
+            }
         }
+
+        useEffect(() => {
+            console.log('Comparison n#', choices)
+            console.log('madeComparisons: ', madeComparisons.map((item) => `${item[0].name} vs ${item[1].name}`))
+            console.log('finalList: ', finalList.toArray().map((item, index) => `${index+1}: ${item.name}`))
+            console.log('needsComparison: ', needsComparison.toArray().map((item) => `${item[0].name} vs ${item[1].name}`))
+            if(activeComparison && activeComparison.length === 2) {
+                console.log('now comparing: ', activeComparison[0].name, 'v', activeComparison[1].name)
+            }
+        }, [activeComparison, choices, finalList, madeComparisons, needsComparison])
 
         return (
             <div className='flex flex-col justify-center items-center h-screen'>

@@ -8,8 +8,9 @@ export interface FinalListProps {
 
 export const FinalList: FunctionComponent<FinalListProps> = ({ list }) => {
     const copyString = `Here's my Star Wars movies ranking:
-        ${list.map((item, index) => `${index+1}: ${item.name}\n`)}
-
+    \n
+        ${list.map((item, index) => `${index+1}: ${item.name}`)}
+    \n
         https://csmyth12.github.io/list-ranker/Starwars
     `
 
