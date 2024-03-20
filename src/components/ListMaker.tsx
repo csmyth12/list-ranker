@@ -71,7 +71,6 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
             setNeedsComparison(needsComparison)
             setFinalList(finalList)
             setActiveIndex(activeIndex + 2)
-            console.log('add to main comparisons: ', addToMainComparisons.map((item) => `${item[0].name} vs ${item[1].name}`))
             setMadeComparisons([...madeComparisons, ...addToMainComparisons])
             setChoices(choices + 1)
             setActiveComparison(newComparison)
@@ -79,16 +78,6 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
                 setDisplayFinalList(true)
             }
         }
-
-        useEffect(() => {
-            console.log('Comparison n#', choices)
-            console.log('madeComparisons: ', madeComparisons.map((item) => `${item[0].name} vs ${item[1].name}`))
-            console.log('finalList: ', finalList.toArray().map((item, index) => `${index+1}: ${item.name}`))
-            console.log('needsComparison: ', needsComparison.toArray().map((item) => `${item[0].name} vs ${item[1].name}`))
-            if(activeComparison && activeComparison.length === 2) {
-                console.log('now comparing: ', activeComparison[0].name, 'v', activeComparison[1].name)
-            }
-        }, [activeComparison, choices, finalList, madeComparisons, needsComparison])
 
         return (
             <div className='flex flex-col justify-center items-center h-screen'>

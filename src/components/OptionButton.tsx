@@ -9,8 +9,8 @@ export interface OptionProps {
 export const OptionButton: FunctionComponent<OptionProps> = ({ option, onSelect }) => (
     <button 
         className={
-            'w-[80%] h-1/2 lg:w-1/2 lg:h-[80%] flex flex-col rounded-xl'
-            + ' justify-center items-center border-2 border-rose-400 mx-24 my-4'
+            'w-[80%] h-[40%] lg:w-1/2 lg:h-[80%] flex flex-col rounded-xl'
+            + ' justify-center items-center border-2 border-rose-400 mx-12 lg:mx-24 my-4'
             + ' transition ease-in-out duration-100 hover:scale-105 hover:bg-rose-300'
             + ' active:scale-105 active:bg-rose-500 focus:scale-105 focus:bg-rose-300'
         }

@@ -21,7 +21,7 @@ export const Comparison: FunctionComponent<ComparisonProps> = ({ activeCompariso
     }
 
     return (
-        <div className='flex flex-col w-screen h-[90%] lg:flex-row p-4'>
+        <div className='flex flex-col w-screen h-[70%] lg:flex-row p-4 lg:h-[90%] items-center'>
             <OptionButton 
                 option={activeComparison[0]} 
                 onSelect={onSelect}

@@ -26,7 +26,7 @@ export const FinalList: FunctionComponent<FinalListProps> = ({ list }) => {
                 ))}
             </ol>
             <div className='flex flex-row items-end justify-end w-full'>
-                <button className='rounded border-2 bg-rose-300 text-white py-4 px-8' onClick={() => copy(copyString)}>Copy</button>
+                <button className='rounded border-2 bg-rose-300 text-white py-4 px-8 hover:bg-rose-500' onClick={() => copy(copyString)}>Copy</button>
             </div>
         </div>
     )
