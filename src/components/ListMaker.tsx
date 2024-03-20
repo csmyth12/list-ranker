@@ -1,9 +1,10 @@
 import { RankerOption } from '@/types/RankerOption'
 import { DoublyLinkedList } from '@/utils/DoublyLinkedList'
-import { FunctionComponent, useEffect, useState } from 'react'
+import { FunctionComponent, useState } from 'react'
 import { Comparison } from './Comparison'
 import { isAlreadyCompared } from '@/utils/getNewComparison'
 import { FinalList } from './FinalList'
+import { ProgressBar } from './ProgressBar'
 
 export interface ListMakerProps {
     list: RankerOption[]
@@ -20,7 +21,6 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
         const [choices, setChoices] = useState(0)
 
         const handleSelection = (preferred: RankerOption, other: RankerOption) => {
-            console.log(`${preferred.name} preferred to ${other.name}`)
             let addToMainComparisons: RankerOption[][] = [[preferred, other]]
             let newComparison = []
             if  (activeIndex < list.length) {
@@ -90,7 +90,9 @@ export const ListMaker: FunctionComponent<ListMakerProps> = ({list}) => {
                             activeComparison={activeComparison} 
                             handleSelection={handleSelection}
                         />
+                        <ProgressBar listLength={list.length} madeComparisonsLength={madeComparisons.length} />
                     </>
+                    
                 )}
             </div>
         )
