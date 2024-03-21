@@ -16,7 +16,7 @@ export const FinalList: FunctionComponent<FinalListProps> = ({ list, listName, d
     list.forEach((item, index) => {
         copyString += `${index + 1}: ${item.name}${'\n'}`
     })
-    copyString += `${'\n'}csmyth12.github.io/list-ranker/${router.pathname}`
+    copyString += `${'\n'}csmyth12.github.io/list-ranker${router.pathname}`
 
     return (
         <div className='p-4'>
